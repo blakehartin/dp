@@ -19,21 +19,21 @@ package gethclient
 import (
 	"bytes"
 	"context"
-	"github.com/DogeProtocol/dp/crypto/cryptobase"
-	"math/big"
-	"testing"
-
+	"github.com/DogeProtocol/dp"
 	"github.com/DogeProtocol/dp/common"
 	"github.com/DogeProtocol/dp/consensus/ethash"
 	"github.com/DogeProtocol/dp/core"
 	"github.com/DogeProtocol/dp/core/rawdb"
 	"github.com/DogeProtocol/dp/core/types"
+	"github.com/DogeProtocol/dp/crypto/cryptobase"
 	"github.com/DogeProtocol/dp/eth"
 	"github.com/DogeProtocol/dp/eth/ethconfig"
 	"github.com/DogeProtocol/dp/ethclient"
 	"github.com/DogeProtocol/dp/node"
 	"github.com/DogeProtocol/dp/params"
 	"github.com/DogeProtocol/dp/rpc"
+	"math/big"
+	"testing"
 )
 
 var (
@@ -135,7 +135,7 @@ func TestGethClient(t *testing.T) {
 func testAccessList(t *testing.T, client *rpc.Client) {
 	ec := New(client)
 	// Test transfer
-	msg := ethereum.CallMsg{
+	msg := dp.CallMsg{
 		From:     testAddr,
 		To:       &common.Address{},
 		Gas:      21000,
@@ -156,7 +156,7 @@ func testAccessList(t *testing.T, client *rpc.Client) {
 		t.Fatalf("unexpected length of accesslist: %v", len(*al))
 	}
 	// Test reverting transaction
-	msg = ethereum.CallMsg{
+	msg = dp.CallMsg{
 		From:     testAddr,
 		To:       nil,
 		Gas:      100000,
@@ -283,7 +283,7 @@ func testSubscribePendingTransactions(t *testing.T, client *rpc.Client) {
 
 func testCallContract(t *testing.T, client *rpc.Client) {
 	ec := New(client)
-	msg := ethereum.CallMsg{
+	msg := dp.CallMsg{
 		From:     testAddr,
 		To:       &common.Address{},
 		Gas:      21000,

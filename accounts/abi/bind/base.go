@@ -20,15 +20,15 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"math/big"
-	"strings"
-	"sync"
-
+	"github.com/DogeProtocol/dp"
 	"github.com/DogeProtocol/dp/accounts/abi"
 	"github.com/DogeProtocol/dp/common"
 	"github.com/DogeProtocol/dp/core/types"
 	"github.com/DogeProtocol/dp/crypto"
 	"github.com/DogeProtocol/dp/event"
+	"math/big"
+	"strings"
+	"sync"
 )
 
 // SignerFn is a signer function callback when a contract requires a method to
@@ -159,7 +159,7 @@ func (c *BoundContract) Call(opts *CallOpts, results *[]interface{}, method stri
 		return err
 	}
 	var (
-		msg    = ethereum.CallMsg{From: opts.From, To: &c.address, Data: input}
+		msg    = dp.CallMsg{From: opts.From, To: &c.address, Data: input}
 		ctx    = ensureContext(opts.Context)
 		code   []byte
 		output []byte
@@ -297,7 +297,7 @@ func (c *BoundContract) transact(opts *TransactOpts, contract *common.Address, i
 			}
 		}
 		// If the contract surely has code (or code is not needed), estimate the transaction
-		msg := ethereum.CallMsg{From: opts.From, To: contract, GasPrice: opts.GasPrice, GasTipCap: opts.GasTipCap, GasFeeCap: opts.GasFeeCap, Value: value, Data: input}
+		msg := dp.CallMsg{From: opts.From, To: contract, GasPrice: opts.GasPrice, GasTipCap: opts.GasTipCap, GasFeeCap: opts.GasFeeCap, Value: value, Data: input}
 		gasLimit, err = c.transactor.EstimateGas(ensureContext(opts.Context), msg)
 
 		if err != nil {
@@ -365,7 +365,7 @@ func (c *BoundContract) FilterLogs(opts *FilterOpts, name string, query ...[]int
 	// Start the background filtering
 	logs := make(chan types.Log, 128)
 
-	config := ethereum.FilterQuery{
+	config := dp.FilterQuery{
 		Addresses: []common.Address{c.address},
 		Topics:    topics,
 		FromBlock: new(big.Int).SetUint64(opts.Start),
@@ -414,7 +414,7 @@ func (c *BoundContract) WatchLogs(opts *WatchOpts, name string, query ...[]inter
 	// Start the background filtering
 	logs := make(chan types.Log, 128)
 
-	config := ethereum.FilterQuery{
+	config := dp.FilterQuery{
 		Addresses: []common.Address{c.address},
 		Topics:    topics,
 	}

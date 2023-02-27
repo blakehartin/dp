@@ -20,11 +20,7 @@ package downloader
 import (
 	"errors"
 	"fmt"
-	"math/big"
-	"sync"
-	"sync/atomic"
-	"time"
-
+	"github.com/DogeProtocol/dp"
 	"github.com/DogeProtocol/dp/common"
 	"github.com/DogeProtocol/dp/core/rawdb"
 	"github.com/DogeProtocol/dp/core/state/snapshot"
@@ -37,6 +33,10 @@ import (
 	"github.com/DogeProtocol/dp/metrics"
 	"github.com/DogeProtocol/dp/params"
 	"github.com/DogeProtocol/dp/trie"
+	"math/big"
+	"sync"
+	"sync/atomic"
+	"time"
 )
 
 var (
@@ -243,7 +243,7 @@ func New(checkpoint uint64, stateDb ethdb.Database, stateBloom *trie.SyncBloom, 
 // In addition, during the state download phase of fast synchronisation the number
 // of processed and the total number of known states are also returned. Otherwise
 // these are zero.
-func (d *Downloader) Progress() ethereum.SyncProgress {
+func (d *Downloader) Progress() dp.SyncProgress {
 	// Lock the current stats and return the progress
 	d.syncStatsLock.RLock()
 	defer d.syncStatsLock.RUnlock()
@@ -260,7 +260,7 @@ func (d *Downloader) Progress() ethereum.SyncProgress {
 	default:
 		log.Error("Unknown downloader chain/mode combo", "light", d.lightchain != nil, "full", d.blockchain != nil, "mode", mode)
 	}
-	return ethereum.SyncProgress{
+	return dp.SyncProgress{
 		StartingBlock: d.syncStatsChainOrigin,
 		CurrentBlock:  current,
 		HighestBlock:  d.syncStatsChainHeight,

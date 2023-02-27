@@ -19,9 +19,10 @@ package accounts
 
 import (
 	"fmt"
+	"github.com/DogeProtocol/dp"
 	"math/big"
 
-	"common"
+	"github.com/DogeProtocol/dp/common"
 	"github.com/DogeProtocol/dp/core/types"
 	"github.com/DogeProtocol/dp/event"
 	"golang.org/x/crypto/sha3"
@@ -98,7 +99,7 @@ type Wallet interface {
 	//
 	// You can disable automatic account discovery by calling SelfDerive with a nil
 	// chain state reader.
-	SelfDerive(bases []DerivationPath, chain ethereum.ChainStateReader)
+	SelfDerive(bases []DerivationPath, chain dp.ChainStateReader)
 
 	// SignData requests the wallet to sign the hash of the given data
 	// It looks up the account specified either solely via its address contained within,

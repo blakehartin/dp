@@ -21,10 +21,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"math/big"
-	"strconv"
-	"time"
-
+	"github.com/DogeProtocol/dp"
 	"github.com/DogeProtocol/dp/common"
 	"github.com/DogeProtocol/dp/common/hexutil"
 	"github.com/DogeProtocol/dp/common/math"
@@ -33,6 +30,9 @@ import (
 	"github.com/DogeProtocol/dp/eth/filters"
 	"github.com/DogeProtocol/dp/internal/ethapi"
 	"github.com/DogeProtocol/dp/rpc"
+	"math/big"
+	"strconv"
+	"time"
 )
 
 var (
@@ -1214,7 +1214,7 @@ func (r *Resolver) ChainID(ctx context.Context) (hexutil.Big, error) {
 
 // SyncState represents the synchronisation status returned from the `syncing` accessor.
 type SyncState struct {
-	progress ethereum.SyncProgress
+	progress dp.SyncProgress
 }
 
 func (s *SyncState) StartingBlock() hexutil.Uint64 {

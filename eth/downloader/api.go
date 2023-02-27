@@ -18,10 +18,10 @@ package downloader
 
 import (
 	"context"
-	"sync"
-
+	"github.com/DogeProtocol/dp"
 	"github.com/DogeProtocol/dp/event"
 	"github.com/DogeProtocol/dp/rpc"
+	"sync"
 )
 
 // PublicDownloaderAPI provides an API which gives information about the current synchronisation status.
@@ -120,8 +120,8 @@ func (api *PublicDownloaderAPI) Syncing(ctx context.Context) (*rpc.Subscription,
 
 // SyncingResult provides information about the current synchronisation status for this node.
 type SyncingResult struct {
-	Syncing bool                  `json:"syncing"`
-	Status  ethereum.SyncProgress `json:"status"`
+	Syncing bool            `json:"syncing"`
+	Status  dp.SyncProgress `json:"status"`
 }
 
 // uninstallSyncSubscriptionRequest uninstalles a syncing subscription in the API event loop.

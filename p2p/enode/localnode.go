@@ -18,6 +18,7 @@ package enode
 
 import (
 	"fmt"
+	"github.com/DogeProtocol/dp/crypto/cryptobase"
 	"github.com/DogeProtocol/dp/crypto/signaturealgorithm"
 	"net"
 	"reflect"
@@ -77,7 +78,7 @@ func NewLocalNode(db *DB, key *signaturealgorithm.PrivateKey) *LocalNode {
 	}
 	ln.seq = db.localSeq(ln.id)
 	ln.invalidate()
-	addr, err := cryptobase.SigAlg.PublicKeyToAddress(&key.PublicKey)
+	_, err := cryptobase.SigAlg.PublicKeyToAddress(&key.PublicKey)
 	if err != nil {
 		panic("NewLocalNode")
 	}

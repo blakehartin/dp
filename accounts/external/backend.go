@@ -18,9 +18,7 @@ package external
 
 import (
 	"fmt"
-	"math/big"
-	"sync"
-
+	"github.com/DogeProtocol/dp"
 	"github.com/DogeProtocol/dp/accounts"
 	"github.com/DogeProtocol/dp/common"
 	"github.com/DogeProtocol/dp/common/hexutil"
@@ -29,6 +27,8 @@ import (
 	"github.com/DogeProtocol/dp/log"
 	"github.com/DogeProtocol/dp/rpc"
 	"github.com/DogeProtocol/dp/signer/core/apitypes"
+	"math/big"
+	"sync"
 )
 
 type ExternalBackend struct {
@@ -147,7 +147,7 @@ func (api *ExternalSigner) Derive(path accounts.DerivationPath, pin bool) (accou
 	return accounts.Account{}, fmt.Errorf("operation not supported on external signers")
 }
 
-func (api *ExternalSigner) SelfDerive(bases []accounts.DerivationPath, chain ethereum.ChainStateReader) {
+func (api *ExternalSigner) SelfDerive(bases []accounts.DerivationPath, chain dp.ChainStateReader) {
 	log.Error("operation SelfDerive not supported on external signers")
 }
 
